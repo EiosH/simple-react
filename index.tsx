@@ -1,5 +1,5 @@
 import React from "./react";
-import ReactDom from "./react/reactDom";
+import ReactDOM from "./react/reactDom";
 
 function Welcome(props) {
   return <h1>Welcome, {props.name}</h1>;
@@ -39,4 +39,4 @@ const app = (
   </div>
 );
 
-ReactDom.render(app, document.getElementById("root"));
+ReactDOM.render(app, document.getElementById("root"));

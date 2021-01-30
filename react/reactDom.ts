@@ -1,10 +1,12 @@
+import { ReactVNode, Attrs } from "./index";
+
 import Component from "./component";
 
 export function render(vnode, container) {
   return container.append(_render(vnode));
 }
 
-function _render(vnode) {
+function _render(vnode: ReactVNode) {
   if (!vnode) return;
 
   if (!(vnode instanceof Object)) {
@@ -26,7 +28,7 @@ function _render(vnode) {
   return element;
 }
 
-function handleAddAttrs(vnode, element) {
+function handleAddAttrs(vnode: ReactVNode, element: Element) {
   Object.keys(vnode.attrs).forEach((key) => {
     const value = vnode.attrs[key];
     if (key.slice(0, 2) === "on") {
@@ -45,8 +47,8 @@ function handleAddAttrs(vnode, element) {
   });
 }
 
-function createComponent(component, props) {
-  let instance;
+function createComponent(component: (props: object) => void, props: Attrs) {
+  let instance: Component;
   if (component.prototype && component.prototype.render) {
     instance = new component(props);
   } else {
@@ -60,8 +62,8 @@ function createComponent(component, props) {
   return instance;
 }
 
-function setComponentProps(component, props) {
-  if (!component.base) {
+function setComponentProps(component: Component, props) {
+  if (!component.element) {
     if (component.componentWillMount) component.componentWillMount();
   } else if (component.componentWillReceiveProps) {
     component.componentWillReceiveProps(props);
@@ -72,23 +74,20 @@ function setComponentProps(component, props) {
   renderComponent(component);
 }
 
-export function renderComponent(component) {
-  let element;
-
+export function renderComponent(component: Component) {
   const renderer = component.render();
 
-  if (component.base && component.componentWillUpdate) {
+  if (component.element && component.componentWillUpdate) {
     component.componentWillUpdate();
   }
 
-  element = _render(renderer);
+  let element = _render(renderer);
 
   if (component.element && component.element.parentNode) {
     component.element.parentNode.replaceChild(element, component.element);
   }
 
   component.element = element;
-  element._component = component;
 }
 
 export default {

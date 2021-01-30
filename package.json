@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
+    "@byted-cg/eslint-config-typescript": "^1.0.1",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "@byted-cg/eslint-config-typescript": "^1.0.1"
+    "babel-preset-typescript": "^7.0.0-alpha.19",
+    "typescript": "^4.1.3"
   }
 }
