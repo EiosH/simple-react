@@ -17,7 +17,7 @@ function _render(vnode) {
 
   const element = document.createElement(vnode.tag);
 
-  vnode.attrs && addAttrs(vnode, element);
+  vnode.attrs && handleAddAttrs(vnode, element);
 
   vnode.children.forEach((child) => {
     render(child, element);
@@ -26,10 +26,22 @@ function _render(vnode) {
   return element;
 }
 
-function addAttrs(vnode, element) {
+function handleAddAttrs(vnode, element) {
   Object.keys(vnode.attrs).forEach((key) => {
     const value = vnode.attrs[key];
-    element.setAttribute(key, value);
+    if (key.slice(0, 2) === "on") {
+      document.addEventListener(key.slice(2).toLocaleLowerCase(), function (e) {
+        // 兼容性处理
+        var event = e || window.event;
+        var target = event.target || event.srcElement;
+        // 判断是否匹配目标元素
+        if (target === element) {
+          value();
+        }
+      });
+    } else {
+      element.setAttribute(key, value);
+    }
   });
 }
 

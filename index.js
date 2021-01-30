@@ -13,11 +13,11 @@ class WelcomeClass extends React.Component {
   componentWillMount() {
     setInterval(() => {
       this.setState({ time: new Date().toLocaleTimeString() });
-    }, 1000);
+    }, 10000);
   }
-  onClick() {
+  handleOnClick() {
     this.setState({
-      index: this.state.index++,
+      index: this.state.index + 1,
     });
   }
   render() {
@@ -25,7 +25,8 @@ class WelcomeClass extends React.Component {
       <h1>
         HelloClass <span>{this.props.name}</span>
         <span> {this.state.time}</span>
-        <button onClick={() => this.onClick()}>{this.state.index}</button>
+        <br />
+        <button onClick={() => this.handleOnClick()}>{this.state.index}</button>
         {this.props.children}
       </h1>
     );
