@@ -1,5 +1,5 @@
-import React from "./react";
-import ReactDOM from "./react/reactDom";
+import React from "./react/index";
+import ReactDOM from "./reactDom/index";
 
 function Welcome(props) {
   return <h1>Welcome, {props.name}</h1>;
@@ -15,6 +15,7 @@ class WelcomeClass extends React.Component {
       this.setState({ time: new Date().toLocaleTimeString() });
     }, 10000);
   }
+
   handleOnClick() {
     this.setState({
       index: this.state.index + 1,
@@ -22,7 +23,7 @@ class WelcomeClass extends React.Component {
   }
   render() {
     return (
-      <h1>
+      <h1 class="sss">
         HelloClass <span>{this.props.name}</span>
         <span> {this.state.time}</span>
         <br />

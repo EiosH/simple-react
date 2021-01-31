@@ -1,8 +1,8 @@
-import { ReactVNode, Attrs } from "./index";
+import { ReactVNode, Attrs } from "../react/index";
 
-import Component from "./component";
+import Component from "../react/component";
 
-export function render(vnode, container) {
+export function render(vnode: ReactVNode, container: HTMLElement) {
   return container.append(_render(vnode));
 }
 

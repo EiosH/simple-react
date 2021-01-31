@@ -1,4 +1,4 @@
-import { renderComponent } from "./reactDom";
+import { renderComponent } from "../reactDom/index";
 import { ReactVNode } from "./index";
 
 type Props = {
@@ -10,17 +10,18 @@ export default class Component {
     [k: string]: any;
   };
   props: Props;
-  constructor(props = {}) {
-    this.state = {};
-    this.props = props;
-  }
+  render: () => ReactVNode;
+  componentWillMount: () => void;
+  componentWillReceiveProps: (props: Props) => void;
+  componentWillUpdate: () => void;
   setState(newState: Props) {
     this.state = { ...this.state, ...newState };
     renderComponent(this);
   }
-  render: () => ReactVNode;
-  element: Element;
-  componentWillMount: () => void;
-  componentWillReceiveProps: (props: Props) => void;
-  componentWillUpdate: () => void;
+  constructor(props = {}) {
+    this.state = {};
+    this.props = props;
+  }
+
+  element: HTMLElement;
 }

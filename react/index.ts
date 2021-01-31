@@ -1,14 +1,12 @@
-import ReactDom from "./reactDom";
+import ReactDom from "../reactDom/index";
 import Component from "./component";
 
-export type Tag = (props: object) => void | string;
-export type ReactVNode =
-  | {
-      tag: Tag;
-      attrs: string[];
-      children: ReactVNode[];
-    }
-  | Exclude<Object, object>;
+export type Tag = (props: object) => void;
+export type ReactVNode = {
+  tag: Tag | string;
+  attrs: string[];
+  children: ReactVNode[];
+};
 
 export type Attrs = string[];
 
