@@ -12,9 +12,9 @@ class WelcomeClass extends React.Component {
     }
 
     componentWillMount() {
-        // setInterval(() => {
-        //   this.setState({ time: new Date().toLocaleTimeString() });
-        // }, 10000);
+        setInterval(() => {
+          this.setState({ time: new Date().toLocaleTimeString() });
+        }, 10000);
     }
 
     handleOnClick() {
