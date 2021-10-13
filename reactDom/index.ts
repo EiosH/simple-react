@@ -13,7 +13,9 @@ function _render(vnode: ReactVNode) {
     return vnode;
   } else if (typeof vnode.tag === "function") {
     const component = createComponent(vnode.tag, vnode.attrs);
+
     setComponentProps(component, vnode.attrs);
+
     return component.element;
   }
 
@@ -53,7 +55,9 @@ function createComponent(component: (props: object) => void, props: Attrs) {
     instance = new component(props);
   } else {
     instance = new Component(props);
-    instance.constructor = component;
+
+    instance.constructor = component.bind(instance);
+
     instance.render = function () {
       return this.constructor(props);
     };
@@ -75,6 +79,7 @@ function setComponentProps(component: Component, props) {
 }
 
 export function renderComponent(component: Component) {
+
   const renderer = component.render();
 
   if (component.element && component.componentWillUpdate) {
