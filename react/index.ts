@@ -17,7 +17,6 @@ export function createElement(
   ...children: ReactVNode[]
 ): ReactVNode {
 
-
   return {
     tag,
     attrs,

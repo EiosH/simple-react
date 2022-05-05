@@ -1,12 +1,13 @@
 import { ReactVNode, Attrs } from "../react/index";
 
 import Component from "../react/component";
+import { diff } from "./diff";
 
 export function render(vnode: ReactVNode, container: HTMLElement) {
   return container.append(_render(vnode));
 }
 
-function _render(vnode: ReactVNode) {
+export function _render(vnode: ReactVNode) {
   if (!vnode) return;
 
   if (!(vnode instanceof Object)) {
@@ -23,7 +24,7 @@ function _render(vnode: ReactVNode) {
 
   vnode.attrs && handleAddAttrs(vnode, element);
 
-  vnode.children.forEach((child) => {
+  vnode.children.forEach(child => {
     render(child, element);
   });
 
@@ -31,10 +32,10 @@ function _render(vnode: ReactVNode) {
 }
 
 function handleAddAttrs(vnode: ReactVNode, element: Element) {
-  Object.keys(vnode.attrs).forEach((key) => {
+  Object.keys(vnode.attrs).forEach(key => {
     const value = vnode.attrs[key];
     if (key.slice(0, 2) === "on") {
-      document.addEventListener(key.slice(2).toLocaleLowerCase(), function (e) {
+      document.addEventListener(key.slice(2).toLocaleLowerCase(), function(e) {
         // 兼容性处理
         var event = e || window.event;
         var target = event.target || event.srcElement;
@@ -58,7 +59,7 @@ function createComponent(component: (props: object) => void, props: Attrs) {
 
     instance.constructor = component.bind(instance);
 
-    instance.render = function () {
+    instance.render = function() {
       return this.constructor(props);
     };
   }
@@ -79,22 +80,20 @@ function setComponentProps(component: Component, props) {
 }
 
 export function renderComponent(component: Component) {
-
   const renderer = component.render();
 
   if (component.element && component.componentWillUpdate) {
     component.componentWillUpdate();
   }
 
-  let element = _render(renderer);
+  // let element = _render(renderer);
 
-  if (component.element && component.element.parentNode) {
-    component.element.parentNode.replaceChild(element, component.element);
-  }
+  let element = diff(component.element, renderer);
 
   component.element = element;
 }
 
 export default {
   render,
+  _render
 };
